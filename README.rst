@@ -13,7 +13,35 @@ freeport
         :alt: Documentation Status
 
 
+Description
+===========
 Simple Python library to free a port
+
+Installation
+============
+
+To install freeport, simply:
+
+.. code-block::
+
+    $ pip install freeport
+
+Usage
+=====
+
+.. code-block::
+
+    $ freeport -h
+       usage: freeport [-h] portnumber
+
+       positional arguments:
+         portnumber  The number of the port you want free (Eg. 8000)
+
+       optional arguments:
+         -h, --help  show this help message and exit 
+    
+    $ freeport 8000
+      Port 8000 is free. Processs 16130 killed successfully
 
 * Free software: ISC license
 * Documentation: https://freeport.readthedocs.org.
