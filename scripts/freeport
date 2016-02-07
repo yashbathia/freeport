@@ -25,10 +25,21 @@ except ValueError:
 except Exception as e:
     print("No process running on port {0}".format(port))
     exit()
-killcmd = 'kill -9 {0}'.format(pid) if pid else None
-isKilled = os.system('kill -9 {0}'.format(pid)) if pid else None
-if isKilled == 0:
-    print("Port {0} is free. Processs {1} killed successfully".format(port, pid))
-else:
-    print("Cannot free port {0}.Failed to kill process {1}, err code:{2}".format(port, pid, isKilled))
+processTypeCmd = 'ps -p {0} -o comm='.format(pid)
+processType = subprocess.check_output(processTypeCmd, shell=True).rstrip('\n')
+confirm = ''
+if processType:
+    while True:
+        confirm = raw_input("Process Type: '{0}'  Port: {1}. Kill?[yes/no]".format(processType, port))
+        confirm = confirm.lower()
+        if confirm == 'yes' or confirm == 'no':
+            break
 
+if confirm == 'yes':
+
+    killcmd = 'kill -9 {0}'.format(pid) if pid else None
+    isKilled = os.system('kill -9 {0}'.format(pid)) if pid else None
+    if isKilled == 0:
+        print("Port {0} is free. Processs {1} killed successfully".format(port, pid))
+    else:
+        print("Cannot free port {0}.Failed to kill process {1}, err code:{2}".format(port, pid, isKilled))
