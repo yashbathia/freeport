@@ -23,7 +23,7 @@ setup_arguments = {
     'long_description': 'Simple Python library to free a port',
     'description': 'Simple Python library to free a port',
     'classifiers': [
-            'License :: OSI Approved :: ISC Licese',
+            'License :: OSI Approved :: ISC License (ISCL)',
             'Operating System :: POSIX :: Linux',
             'Programming Language :: Python',
     ],
