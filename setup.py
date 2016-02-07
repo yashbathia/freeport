@@ -14,7 +14,7 @@ BASEPATH = os.path.dirname(os.path.abspath(__file__))
 # without running setup() to allow external scripts to see the setup settings.
 setup_arguments = {
     'name': 'freeport',
-    'version': '0.1.6',
+    'version': '0.1.8',
     'author': 'Yash Bathia',
     'author_email': 'yash.bathia@yahoo.com',
     'url': 'http://github.com/yashbathia/freeport',
