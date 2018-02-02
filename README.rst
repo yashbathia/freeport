@@ -1,5 +1,7 @@
 # Pharrell Notes
 
+> Maybe use python3 to develop will have no pull request issues of travis-ci.
+
 1. Create tar: ``python setup.py sdist``
 
 2. Create your own wheel: ``python setup.py bdist_wheel --universal``
