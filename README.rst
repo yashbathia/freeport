@@ -1,3 +1,9 @@
+# Pharrell Notes
+
+1. Create tar: ``python setup.py sdist``
+
+2. Create your own wheel: ``python setup.py bdist_wheel --universal``
+
 ===============================
 freeport
 ===============================
