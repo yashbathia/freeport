@@ -2,9 +2,21 @@
 
 > Maybe use python3 to develop will have no pull request issues of travis-ci.
 
-1. Create tar: ``python setup.py sdist``
+## Development
 
-2. Create your own wheel: ``python setup.py bdist_wheel --universal``
+1. ``virtualenv venv -p `which python3.6```
+
+2. ``source venv/bin/activate``
+
+3. ``pip install -r requirements_dev.txt``
+
+4. Create tar: ``python setup.py sdist``
+
+5. Create your own wheel: ``python setup.py bdist_wheel --universal``
+
+6. go find `*.whl` file from `./dist/` folder.
+
+7. ``pip install *.whl`` to install the generated package.
 
 ===============================
 freeport
