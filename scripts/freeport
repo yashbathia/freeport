@@ -10,35 +10,47 @@ parser.add_argument("portnumber", help="The number of the port you want free (Eg
 
 args = parser.parse_args()
 port = args.portnumber
-errMsg = None
 
 try:
-    errMsg = 'Enter integer value for port number'
     port = int(port)
     cmd = 'lsof -t -i:{0}'.format(port)
-    pid = subprocess.check_output(cmd, shell=True)
-    pid = int(pid)
-except ValueError:
     pid = None
-    print(errMsg)
+    try:
+        pid = subprocess.check_output(cmd, shell=True)
+    except Exception as e:
+        print("No process running on port {} by current user. Checking if root is running the proecess".format(port))
+        if pid is None:
+            cmd = 'sudo lsof -t -i:{0}'.format(port)
+            pid = subprocess.check_output(cmd, shell=True)
+    pid = int(pid)
+except ValueError as e:
+    print(e)
     exit()
 except Exception as e:
-    print("No process running on port {0}".format(port))
+    print("No process found running on port {0}.".format(port))
     exit()
 processTypeCmd = 'ps -p {0} -o comm='.format(pid)
-processType = subprocess.check_output(processTypeCmd, shell=True).rstrip('\n')
+processType = subprocess.check_output(processTypeCmd, shell=True, text=True).rstrip('\n')
 confirm = ''
 if processType:
     while True:
-        confirm = raw_input("Process Type: '{0}'  Port: {1}. Kill?[yes/no]".format(processType, port))
+        try:
+            confirm = raw_input("Process Type: '{0}'  Port: {1}. Kill?[yes/no]".format(processType, port))
+        except NameError:
+            confirm = input("Process Type: '{0}'  Port: {1}. Kill?[yes/no]".format(processType, port))
+            
         confirm = confirm.lower()
         if confirm == 'yes' or confirm == 'no':
             break
 
 if confirm == 'yes':
-
-    killcmd = 'kill -9 {0}'.format(pid) if pid else None
-    isKilled = os.system('kill -9 {0}'.format(pid)) if pid else None
+    userCmd = 'ps -o user= -p {}'.format(pid)
+    user = subprocess.check_output(userCmd, shell=True, text=True).rstrip('\n')
+    if user.lower() == "root":
+        killCmd = 'sudo kill -9 {0}'.format(pid)
+    else:
+        killCmd = 'kill -9 {0}'.format(pid)
+    isKilled = os.system(killCmd)
     if isKilled == 0:
         print("Port {0} is free. Processs {1} killed successfully".format(port, pid))
     else:
